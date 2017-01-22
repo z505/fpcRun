@@ -3,13 +3,13 @@ FPC Run, will run a program after compiling it.
 
 Avoiding the need to compile and then run (two commands at a terminal, or two steps)
 
-Just one step with fpr.exe (windows) or fpr (unix) 
+Just one step with fpr.exe (windows) or fpr (unix)
 
 ### Where to place fpr.exe or fpr executable?
 
 On windows, place fpr.exe in the same directory as your fpc.exe executable. Then it will be in your path and you can use it at the command line just like using fpc
 
-Unix: currently testing this out to see if ExecuteProcess works okay if fpr is in same directory as fpc. If not, fpr will have to be changed to use TProcess instead
+Unix: place fpr in same directory as fpc. You may have to sudo or su (switch to root) to copy it to that location, i.e. /usr/bin.
 
 ### Usage
 
