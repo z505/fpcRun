@@ -10,7 +10,7 @@ program fpr;
 {$mode objfpc}{$H+}
 
 uses
-  sysutils, strutils;
+  sysutils, strutils {$ifdef unix}, unix{$endif};
 
 const
   FpcExe = {$IFDEF WINDOWS}'fpc.exe'{$ELSE}'fpc'{$ENDIF};
