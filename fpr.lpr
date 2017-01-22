@@ -48,7 +48,7 @@ begin
 end;
 
 {$IFDEF UNIX}
-function ExecProc(cmd: string; params: TStringArray);
+function ExecProc(cmd: string; params: TStringArray): integer;
 var
   i, len: integer;
 begin
