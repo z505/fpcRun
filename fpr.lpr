@@ -30,7 +30,7 @@ var
 
 procedure VerboseMsg(s: string);
 begin
-  if VerboseOpt then writeln(s);
+  if VerboseOpt then writeln('VERBOSE: '+s);
 end;
 
 // gets all parameters sent in to command: paramstr(), and returns as array
@@ -38,31 +38,33 @@ function GetParams(out params: TStringArray): boolean;
 var
   i: integer;
   count: integer;
+  curParam: string;
 begin
   result := false;
   count := ParamCount();
   if count < 1 then exit;
   SetLength(params, count);
   for i := 0 to count-1 do begin
+    curParam := ParamStr(i+1);
     // copy all paramaters to array except "verbose" special FPR option
-    if params[i] <> '=v' then begin
-      params[i] := ParamStr(i+1);
+    if curParam <> '=v' then begin
+      params[i] := curParam;
     end;
   end;
   if length(params) > 0 then result := true;
 end;
 
 // Runs fpc compiler. Returns false if couldn't run fpc
-function RunFpc: boolean;
+function RunFpc(out exitcode: integer): boolean;
 var
   got: boolean;
   params: TStringArray;
-  exitCode: integer;
+
 begin
   result := false;
   got := GetParams(params);
   if got then begin
-    exitCode := ExecuteProcess(FpcExe, params, []);;
+    exitcode := ExecuteProcess(FpcExe, params, []);;
     VerboseMsg('exit code: '+ IntToStr(exitCode));
     result := true;
   end else begin
@@ -120,6 +122,7 @@ begin
   if prog = '' then begin
     writeln('Program name not found in command line arguments of FPR');
   end;
+  writeln('-------- Program Output Below --------');
   exitCode := ExecuteProcess(prog, '', []);;
   VerboseMsg('exit code of compiled program: '+ IntToStr(exitCode));
 end;
@@ -141,8 +144,15 @@ begin
   end;
 end;
 
+var
+  exitcode: integer;
+  ran: boolean;
 begin
   CheckVerbose;
-  if RunFpc then RunCompiledProg;
+  ran := RunFpc(exitcode);
+  if ran then begin
+    // if exit code is not zero then compilation aborted. Only run program if compilation was successful
+    if exitcode = 0 then RunCompiledProg;
+  end;
 end.
 
