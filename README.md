@@ -8,19 +8,18 @@ Just one step with fpr.exe (windows) or fpr (unix)
 ### Usage
 
 Just type in
-    fpr sourcefile
+    `fpr sourcefile`
 the same way you would use fpc.exe or fpc. It runs the program after compiling.
 
 Extra options:
-    fpr =v sourcefile
+    `fpr =v sourcefile`
 The "=v" option specifes fpr to run in verbose mode giving more detailed notices.
 
 ### More detailed info below:
 
-Runs program after compiling. Initially was going to be fpcrun.exe but shortened to fpr.exe or fpr on unix for easy usage at command line fpr special option: use =v for verbose output
+Runs program after compiling. Initially it was going to be fpcrun.exe but shortened to "fpr" for easy usage at command line (fpr.exe on windows).
 
-Potential issues: if the -o option is used to specify a different exe and this -o option exists inside an fpc.cfg file, this program fpr knows nothing about it.  This fpr program will try to run the program as the source file program name.
+Potential issues: if the -o option is used to specify a different exe and this -o option exists inside an fpc.cfg file, this program fpr knows nothing about it.  This fpr program will try to run the program as the source file program name or an -o option sent to the compiler at the command line. So if the -o option is used at the command line it works fine as fpr detects this.
 
-If the -o option is used at the command line it works fine as fpr detects this.
-
-License: you may use this code under MIT or BSD license (most open that can be) 
+### License 
+You may use this code under MIT or BSD license (most open that can be) 
