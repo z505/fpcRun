@@ -47,6 +47,26 @@ begin
   if length(params) > 0 then result := true;
 end;
 
+{$IFDEF UNIX}
+function ExecProc(cmd: string; params: TStringArray);
+var
+  i, len: integer;
+begin
+  len := length(params);
+  for i := 0 to len-1 do begin
+    cmd := cmd + ' ' + params[i];
+  end;
+  result := fpSystem(cmd);
+end;
+{$ENDIF}
+
+{$IFDEF WINDOWS}
+function ExecProc(cmd: string; params: TStringArray): integer;
+begin
+  result := ExecuteProcess(cmd, params, []);;
+end;
+{$ENDIF}
+
 // Runs fpc compiler. Returns false if couldn't run fpc
 function RunFpc(out exitcode: integer): boolean;
 var
@@ -57,7 +77,7 @@ begin
   result := false;
   got := GetParams(params);
   if got then begin
-    exitcode := ExecuteProcess(FpcExe, params, []);;
+    exitcode := ExecProc(FpcExe, params);;
     VerboseMsg('exit code: '+ IntToStr(exitCode));
     result := true;
   end else begin
@@ -148,4 +168,5 @@ begin
     if exitcode = 0 then RunCompiledProg;
   end;
 end.
+
 
