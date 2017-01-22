@@ -5,13 +5,17 @@ Avoiding the need to compile and then run (two commands at a terminal, or two st
 
 Just one step with fpr.exe (windows) or fpr (unix) 
 
-#H1 Usage
+### Usage
 
 Just type in
     fpr sourcefile
 the same way you would use fpc.exe or fpc. It runs the program after compiling.
 
-More detailed info below:
+Extra options:
+    fpr =v sourcefile
+The "=v" option specifes fpr to run in verbose mode giving more detailed notices.
+
+### More detailed info below:
 
 Runs program after compiling. Initially was going to be fpcrun.exe but shortened to fpr.exe or fpr on unix for easy usage at command line fpr special option: use =v for verbose output
 
